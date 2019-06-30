@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import SpriteKit
+import SpriteKit //インポートする　　★★★
 
 class ViewController: UIViewController {
 
@@ -15,24 +15,27 @@ class ViewController: UIViewController {
         super.viewDidLoad()
   
         // SKViewに型を変換する SpriteKitのこと。ゲームを作るためのフレームワーク。
-        let skView = self.view as! SKView
+        let skView = self.view as! SKView //★★★
+        //SKViewとはSKSceneを表示するためのもの
+        //UIViewに対してキャストして使用する
+        
         
         // FPSを表示する。画面が一秒間に何回更新されるかを示す。
-        skView.showsFPS = true
+        skView.showsFPS = true   //★★★
         
         // ノードの数を表示する。テキストやキャラクター。画像などの物体を表示します。
-        skView.showsNodeCount = true
+        skView.showsNodeCount = true  //★★★
         
         // ビューと同じサイズでシーンを作成する
-        let scene = GameScene(size:skView.frame.size)  //GameSceneクラスに変更
+        let scene = GameScene(size:skView.frame.size)  //GameSceneクラスに変更　//★★★
         
         // ビューにシーンを表示する
-        skView.presentScene(scene)
+        skView.presentScene(scene)  //★★★
     
-    
+    //１SKViewをキャストする（tableView)的な物
+    //2 SKSceneの設定。SKSceとは表示する画面の１ユニット
 
     }
-
 
 }
 
