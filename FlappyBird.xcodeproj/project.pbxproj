@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		EE4B995922BAA02200BCC0A7 /* bird_b@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE4B995822BAA02200BCC0A7 /* bird_b@2x.png */; };
 		EE4B995B22BAA14600BCC0A7 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4B995A22BAA14600BCC0A7 /* GameScene.swift */; };
+		EE66BA3F22D9E6D000A0AB23 /* music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EE66BA3E22D9E6D000A0AB23 /* music.mp3 */; };
 		EEB945A822B64A12007A624C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB945A722B64A12007A624C /* AppDelegate.swift */; };
 		EEB945AA22B64A12007A624C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB945A922B64A12007A624C /* ViewController.swift */; };
 		EEB945AD22B64A12007A624C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EEB945AB22B64A12007A624C /* Main.storyboard */; };
@@ -19,6 +20,7 @@
 /* Begin PBXFileReference section */
 		EE4B995822BAA02200BCC0A7 /* bird_b@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bird_b@2x.png"; sourceTree = "<group>"; };
 		EE4B995A22BAA14600BCC0A7 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		EE66BA3E22D9E6D000A0AB23 /* music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music.mp3; sourceTree = "<group>"; };
 		EEB945A422B64A12007A624C /* FlappyBird.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlappyBird.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEB945A722B64A12007A624C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EEB945A922B64A12007A624C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 				EEB945A922B64A12007A624C /* ViewController.swift */,
 				EEB945AB22B64A12007A624C /* Main.storyboard */,
 				EE4B995822BAA02200BCC0A7 /* bird_b@2x.png */,
+				EE66BA3E22D9E6D000A0AB23 /* music.mp3 */,
 				EEB945AE22B64A14007A624C /* Assets.xcassets */,
 				EE4B995A22BAA14600BCC0A7 /* GameScene.swift */,
 				EEB945B022B64A14007A624C /* LaunchScreen.storyboard */,
@@ -128,6 +131,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE66BA3F22D9E6D000A0AB23 /* music.mp3 in Resources */,
 				EE4B995922BAA02200BCC0A7 /* bird_b@2x.png in Resources */,
 				EEB945B222B64A14007A624C /* LaunchScreen.storyboard in Resources */,
 				EEB945AF22B64A14007A624C /* Assets.xcassets in Resources */,

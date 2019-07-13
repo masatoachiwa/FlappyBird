@@ -19,7 +19,7 @@ class GameScene: SKScene , SKPhysicsContactDelegate /* 追加 */ { //★★★
         
         var ringoImage:SKSpriteNode! //課題
       
-     
+     let playSound = SKAction.playSoundFileNamed("music",waitForCompletion: false)
 
         
         // 衝突判定カテゴリー ↓追加
@@ -103,7 +103,7 @@ class GameScene: SKScene , SKPhysicsContactDelegate /* 追加 */ { //★★★
                         itemScore += 1
                         itembestScoreLabelNode.text = "Item Score:\(itemScore)"    // ←追加
                         
-                     
+                        run(playSound)
                         
                         
                         
@@ -208,7 +208,7 @@ class GameScene: SKScene , SKPhysicsContactDelegate /* 追加 */ { //★★★
                         // groundのスプライトを配置する
                         for i in 0..<needNumber {
                                 let sprite = SKSpriteNode(texture: groundTexture) //★★★
-                                sprite.zPosition = -400
+                               
                                 
                                 // テクスチャを指定してスプライトを作成する　　//消すの？
                                 //    let groundSprite = SKSpriteNode(texture: groundTexture) //★★★（なぜ、消す必要があるのか？下のコードで使っているのに、なぜと疑問に思ったが、後にspriteに変更していることが判明
@@ -488,10 +488,10 @@ func setupBird() {
                 ringoA.filteringMode = .linear //テクスチャ作成
                
                 //りんごの画像サイズを取得
-                let ringoSize = SKTexture(imageNamed: "ringo-a").size()
-                let random_r_range = ringoSize.height * 3   //りんごの３倍の画像代入
+           //     let ringoSize = SKTexture(imageNamed: "ringo-a").size()
+          //      let random_r_range = ringoSize.height * 3   //りんごの３倍の画像代入
                 
-                let random_r = CGFloat.random(in: -3..<random_r_range)
+          //      let random_r = CGFloat.random(in: -3..<random_r_range)
         
            
                 
