@@ -13,8 +13,11 @@ class GameScene: SKScene , SKPhysicsContactDelegate /* 追加 */ { //★★★
 
         var scrollNode:SKNode!
         var wallNode:SKNode!    // 追加
-        
+        var ringoNode:SKNode!    //課題
+
         var bird:SKSpriteNode!    // 追加
+        
+        var ringoImage:SKSpriteNode! //課題
       
      
 
@@ -24,6 +27,7 @@ class GameScene: SKScene , SKPhysicsContactDelegate /* 追加 */ { //★★★
         let groundCategory: UInt32 = 1 << 1     // 0...00010
         let wallCategory: UInt32 = 1 << 2       // 0...00100
         let scoreCategory: UInt32 = 1 << 3      // 0...01000
+        let ringoCategory: UInt32 = 1 << 4      // 0...01000
        
         
 
@@ -37,7 +41,9 @@ class GameScene: SKScene , SKPhysicsContactDelegate /* 追加 */ { //★★★
         
         // スコア用
         var score = 0  // ←追加
+        var itemScore = 0 //課題
         var scoreLabelNode:SKLabelNode!    // ←追加
+        var itembestScoreLabelNode:SKLabelNode! //課題
         var bestScoreLabelNode:SKLabelNode!    // ←追加
         let userDefaults:UserDefaults = UserDefaults.standard    // 追加
 
@@ -55,9 +61,7 @@ class GameScene: SKScene , SKPhysicsContactDelegate /* 追加 */ { //★★★
                 bird.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 15))
                  }else if bird.speed == 0 { // --- ここから ---
                         restart()
-                        
-                        
-                }
+                 }
         } // --- ここまで追加 ---
         
   
@@ -87,9 +91,28 @@ class GameScene: SKScene , SKPhysicsContactDelegate /* 追加 */ { //★★★
                                 userDefaults.synchronize()
                         } // --- ここまで追加---
                         
-
+      
                         
                         
+                }  else if ((contact.bodyA.categoryBitMask & ringoCategory) == ringoCategory || (contact.bodyB.categoryBitMask & ringoCategory) == ringoCategory) {
+                        
+                       contact.bodyA.node?.removeFromParent()
+                        
+                                        // スコア用の物体と衝突した
+                        print("ScoreUp")
+                        itemScore += 1
+                        itembestScoreLabelNode.text = "Item Score:\(itemScore)"    // ←追加
+                        
+                     
+                        
+                        
+                        
+                        
+                        
+                
+                
+                        
+                
                 } else {
                         // 壁か地面と衝突した
                         print("GameOver")
@@ -104,12 +127,14 @@ class GameScene: SKScene , SKPhysicsContactDelegate /* 追加 */ { //★★★
                                 self.bird.speed = 0
                         })
                 }
-        }
+                }
+        
         
         func restart() {
                 score = 0
+                itemScore = 0
                 scoreLabelNode.text = String("Score:\(score)")    // ←追加
-
+                itembestScoreLabelNode.text = String("Item Score:\(itemScore)")    // ←追加
                 
                 bird.position = CGPoint(x: self.frame.size.width * 0.2, y:self.frame.size.height * 0.7)
                 bird.physicsBody?.velocity = CGVector.zero
@@ -122,17 +147,6 @@ class GameScene: SKScene , SKPhysicsContactDelegate /* 追加 */ { //★★★
                 scrollNode.speed = 1
         }
 
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         
         
         override func didMove(to view: SKView) {//この画面が呼び出された時に実行される処理　//★★★
@@ -153,7 +167,11 @@ class GameScene: SKScene , SKPhysicsContactDelegate /* 追加 */ { //★★★
                 addChild(scrollNode) //★★追加で必要
                 // 壁用のノード
                 wallNode = SKNode()   // 追加　★★★(Nodeのボス）
-                scrollNode.addChild(wallNode)   // 追加　★★使いますよという意味（今まで上のコードで使えたと思うのだが、なぜこれはあaddChildがいるのか）
+                scrollNode.addChild(wallNode)   // 追加　★★使いますよという意味（
+                ringoNode = SKNode()  //課題りんご用のノード
+                scrollNode.addChild(ringoNode)
+                
+                
                 
                 
                 // 各種スプライトを生成する処理をメソッドに分割
@@ -163,6 +181,8 @@ class GameScene: SKScene , SKPhysicsContactDelegate /* 追加 */ { //★★★
                 setupBird()   // 追加
                 
                 setupScoreLabel()   // 追加
+                
+                setupRing() //課題
         }
                 
                 func setupGround() { //★★★ 地面の画像
@@ -403,8 +423,8 @@ func setupBird() {
         
         // 衝突のカテゴリー設定
         bird.physicsBody?.categoryBitMask = birdCategory    // ←追加
-        bird.physicsBody?.collisionBitMask = groundCategory | wallCategory    // ←追加
-        bird.physicsBody?.contactTestBitMask = groundCategory | wallCategory    // ←追加
+        bird.physicsBody?.collisionBitMask = groundCategory | wallCategory | ringoCategory   // ←追加
+        bird.physicsBody?.contactTestBitMask = groundCategory | wallCategory | ringoCategory   // ←追加
         
         
         
@@ -435,19 +455,115 @@ func setupBird() {
                 let bestScore = userDefaults.integer(forKey: "BEST")
                 bestScoreLabelNode.text = "Best Score:\(bestScore)"
                 self.addChild(bestScoreLabelNode)
+    
+               itemScore = 0
+               itembestScoreLabelNode = SKLabelNode()
+               itembestScoreLabelNode.fontColor = UIColor.black
+               itembestScoreLabelNode.position = CGPoint(x: 10, y: self.frame.size.height - 120)
+               itembestScoreLabelNode.zPosition = 100 // 一番手前に表示する
+               itembestScoreLabelNode.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
+               itembestScoreLabelNode.text = "Item Score:\(itemScore)"
+                self.addChild(itembestScoreLabelNode)
+
+        
+         
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         }
         
+        func setupRing(){
+              
+                
+                let ringoA = SKTexture(imageNamed: "ringo-a")  //りんごの画像を読み込む
+                ringoA.filteringMode = .linear //テクスチャ作成
+               
+                //りんごの画像サイズを取得
+                let ringoSize = SKTexture(imageNamed: "ringo-a").size()
+                let random_r_range = ringoSize.height * 3   //りんごの３倍の画像代入
+                
+                let random_r = CGFloat.random(in: -3..<random_r_range)
         
+           
+                
+                let wallTexture = SKTexture(imageNamed: "wall")
+                wallTexture.filteringMode = .linear //★★★
+                
+                // 移動する距離を計算
+                let movingDistance = CGFloat(self.frame.size.width + wallTexture.size().width)
+                
+            
+                
+                //--------------りんごをスクロールさせるアクションを記述する-----
+                
+                // 画面外まで移動するアクションを作成
+                let moveRingo = SKAction.moveBy(x: -movingDistance*2, y: 0, duration:8)   //元々は壁と同じように右のコードだった (x: -movingDistance, y: 0, duration:４)
+                
+                // 自身を取り除くアクションを作成
+                let removeWall = SKAction.removeFromParent()
+                
+                // 2つのアニメーションを順に実行するアクションを作成
+                let ringoAnimation = SKAction.sequence([moveRingo,  removeWall])
+//----------------------ここまで------------------------------
+                
+                //---------りんごを生成するアクションを作成----------
+                
+                let  createRingoAnimation = SKAction.run({
+                        let ringo = SKNode()
+                        let iValue = CGFloat.random(in: 150 ... 800)
+                       
+                        ringo.position = CGPoint(x: self.frame.size.width*1.4 + ringoA.size().width / 2 , y:iValue )
+                      print(iValue)
+                       
+                      
+                        let up = SKSpriteNode(texture: ringoA)
+                    //    up.position = CGPoint(x: self.frame.size.width * 0.5, y:self.frame.size.height * 0.6)
+                     up.position = CGPoint(x: self.frame.size.width * 0.5, y:0)
+                        
+                        up.physicsBody = SKPhysicsBody(rectangleOf: ringoA.size())    // ←追加
+                        // 衝突のカテゴリー設定
+                        up.physicsBody?.categoryBitMask = self.ringoCategory    // ←追加
+                        // 衝突の時に動かないように設定する
+                        up.physicsBody?.isDynamic = false
+                        
+                        
+                        
+                     
+                        
+                        
+                        
+                
+                        
+                        
+                        
+                        ringo.addChild(up) //ノードは作っただけでは表示されないので、addChild() を使ってシーンに追加する必要があると覚えておきまし
+                        ringo.run(ringoAnimation)
+                        
+                        self.ringoNode.addChild(ringo)
+                        
+       
         
-        
-        
-        
+                })
+               
+                // 次の壁作成までの時間待ちのアクションを作成
+                let waitringoAnimation = SKAction.wait(forDuration: 2)
+                
+                //Ringo 壁を作成->時間待ち->壁を作成を無限に繰り返すアクションを作成
+                let repeatForeverAnimation = SKAction.repeatForever(SKAction.sequence([createRingoAnimation, waitringoAnimation]))
+                
+                ringoNode.run(repeatForeverAnimation)
+                
+        }
 }
         
-        
-
-        
-        
-
 
 
